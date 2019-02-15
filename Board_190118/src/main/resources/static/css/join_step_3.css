@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+#div-title {
+	margin-top: 10px;
+   	margin-left: 20px;
+   	margin-bottom: 10px;
+}
+
+#form-group {
+   	margin-left: 20px;
+   	margin-bottom: 10px;
+   	width: 30%	
+}
+
+#div-error {
+	margin-top: 10px;
+   	margin-left: 20px;
+   	margin-bottom: 10px;
+   	font-style: italic;
+   	font-weight: bolder;
+   	color: blue;
+}

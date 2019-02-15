@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>게시판 자세히</title>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="/css/board_detail.css">
+
+</head>
+
+<body>
+	<div id="div-title">
+		<h2>상세 게시판</h2>	
+	</div>
+
+	<!-- 게시판 상세 -->
+	<table class="table" id="table-detail-board">
+	  <thead class="thead-dark">
+	    <tr>
+			<th scope="col" colspan="3">제목</th>
+	    </tr>
+		<tr th:each="boardVO : ${boardVO}">
+			<td colspan="3" th:text="${boardVO.bo_title}"></td>
+		</tr>
+		<tr>
+			<th>작성자</th>
+			<th>날짜</th>
+			<th>조회수</th>
+		</tr>
+		<tr th:each="boardVO : ${boardVO}">
+			<td th:text="${boardVO.bo_writer}"></td>
+			<td th:text="${#dates.format(boardVO.bo_date, 'yyyy/MM/dd HH:mm')}"></td>
+			<td th:text="${boardVO.bo_count}"></td>
+		</tr>
+		<tr>
+			<th colspan="3">내용</th>
+		</tr>
+		<tr th:each="boardVO : ${boardVO}">
+			<td colspan="3" th:text="${boardVO.bo_contents}"></td>
+		</tr>		
+		<tr>
+			<th colspan="3">첨부파일</th>
+		</tr>
+		<tr th:each="fileVO : ${resultFile}">
+			<td colspan="3">
+				<a th:href="@{/download_file/{f_bo_num}(f_bo_num=${fileVO.f_bo_num})}" th:text="${fileVO.f_file_ori_name}"></a>
+	        </td>
+		</tr>		
+	  </thead>
+	</table>
+	<br>
+
+	<!-- 댓글 내용 -->	
+	<table class="table" id="table-reply">
+	  <thead class="thead-dark">
+	    <tr>
+			<th scope="col">댓글번호</th>
+			<th scope="col">내용</th>
+			<th scope="col">작성자</th>
+			<th scope="col">날짜</th>
+			<th scope="col">편집/삭제</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		<tr th:each="replyVO : ${resultReply}">
+			<td th:text="${replyVO.re_num}"></td>
+			<td th:text="${replyVO.re_contents}"></td>
+			<td th:text="${replyVO.re_writer}"></td>
+			<td th:text="${#dates.format(replyVO.re_date, 'yyyy/MM/dd HH:mm')}"></td>
+			<td>
+				<a th:href="@{/delete_reply(re_bo_num=${replyVO.re_bo_num}, re_num=${replyVO.re_num}, re_writer=${replyVO.re_writer})}" onclick="return deleteBefore();">삭제</a>
+			</td>			
+		</tr>
+	  </tbody>
+	</table>	
+	<br>
+	
+	<!-- 댓글작성 form -->
+	<form action="#" th:action="@{/write_reply}" th:object="${boardVO}" method="post">
+		<table class="table" id="table-reply-form">
+		  <thead class="thead-dark">			
+				<tr>
+					<th scope="col">댓글</th>
+					<td>
+						<textarea class="form-control" name="contents" rows="5"></textarea>
+					</td>
+	
+					<td>
+						<span th:each="loginInfo : ${session.loginUser}">
+							<span th:text="${loginInfo.us_name}"></span>
+							(<span th:text="${loginInfo.us_sabun}"></span>)
+						</span>
+						
+						<input type="hidden" th:field="*{bo_num}" />
+					</td>
+	
+					<td>
+						<button type="submit" class="btn btn-primary">댓글달기</button>
+					</td>
+				</tr>
+			</thead>
+		</table>	
+	</form>
+	
+	<!-- 에러메시지를 출력하는 부분 -->
+	<div id="error-info">
+		<span th:text="${error}"></span>
+	</div>
+	
+	<button type="button" class="btn btn-primary" id="btn_back" onclick="location.href='/board'">뒤로</button>
+	
+	<!-- 자바스크립트 처리하는 부분 -->
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			<!-- 편집 버튼 눌렀을때, 확인 -->
+			function updateBefore() {
+				var result = confirm("해당 게시물을 편집하겠습니까?");
+				return result;
+			}
+		
+			<!-- 삭제 버튼 눌렀을때, 확인 -->
+			function deleteBefore() {
+				var result = confirm("해당 게시물을 삭제하겠습니까?");
+				return result;
+			}
+		/*]]>*/
+	</script>	
+</body>
+</html>

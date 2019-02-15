@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+#title {
+	margin-top: 10px;
+   	margin-left: 20px;
+   	margin-bottom: 10px;
+}
+
+#form-group {
+	margin-left: 20px;
+	margin-bottom: 10px;
+    width: 20%;
+    height: 100%;
+}
+
+#error-info {
+	margin-left: 20px;
+	width: 20%;
+	height: 100%;
+}

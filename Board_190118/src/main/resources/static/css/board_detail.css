@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+#div-title {
+	margin-top: 10px;
+	margin-left: 20px;
+}
+
+#table-detail-board, #table-reply, #table-reply-form {
+	border-style: solid;
+	margin-top: 10px;
+	margin-left: 20px;
+	width: 70%;
+}
+
+#btn_back {
+	margin-top: 10px;
+	margin-left: 20px;		
+}

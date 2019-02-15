@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.woongs.mapper.BoardMapper">
+
+	<!-- 게시판 글의 갯수 조회 -->
+	<select id="getCountBoardList" parameterType="com.woongs.vo.PageVO" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			tb_board
+		<where>
+		  <if test="keyword != null">
+		  	<if test="keyfield == 'title'">
+			    AND bo_title like '%'||#{keyword}||'%'
+		  	</if>
+		  	<if test="keyfield == 'content'">
+			    AND bo_contents like '%'||#{keyword}||'%'
+		  	</if>
+		  </if>
+		</where>
+	</select>
+
+    <!-- 첫화면 게시판 내용 전체 조회 -->
+    <select id="getBoardList" parameterType="com.woongs.vo.PageVO" resultType="com.woongs.vo.BoardVO">
+		SELECT
+			bo_num,
+            bo_title,
+            bo_writer,
+            bo_date,
+            bo_count
+		FROM
+			tb_board
+		<where>
+		  <if test="keyword != null">
+		  	<if test="keyfield == 'title'">
+			    AND bo_title like '%'||#{keyword}||'%'
+		  	</if>
+		  	<if test="keyfield == 'content'">
+			    AND bo_contents like '%'||#{keyword}||'%'
+		  	</if>
+		  </if>
+		</where>  
+		ORDER BY
+			bo_num DESC 
+		limit #{countList} offset (#{page}) * #{countList};
+    </select>
+
+	<!-- 게시물 번호에 따른 조회 -->
+	<select id="selectBoardDetailByBonum" parameterType="com.woongs.vo.BoardVO" resultType="com.woongs.vo.BoardVO">
+		SELECT
+			bo_num,
+            bo_title,
+            bo_writer,
+            bo_date,
+            bo_count,
+            bo_contents
+		FROM
+			tb_board
+		WHERE
+			bo_num = #{bo_num}
+	</select>
+
+	<!-- 조회수 증가 update -->
+	<update id="updateCountByBonum" parameterType="com.woongs.vo.BoardVO">
+		UPDATE
+			tb_board
+		SET
+			bo_count = #{bo_count}
+		WHERE
+			bo_num = #{bo_num}		
+	</update>
+
+	<!-- 게시판 글쓰기 -->    
+	<insert id="writeBoard" parameterType="com.woongs.vo.BoardVO" useGeneratedKeys="true" keyProperty="bo_num">
+		INSERT INTO
+			tb_board
+			(
+				bo_num,
+	            bo_title,
+	            bo_writer,
+	            bo_date,
+	            bo_count,
+	            bo_contents
+	        )
+		VALUES
+			(
+				nextval('tb_board_bo_num_seq'),
+				#{bo_title},
+				#{bo_writer},
+				#{bo_date},
+				#{bo_count},
+				#{bo_contents}
+			)
+	</insert>
+
+	<!-- 글번호에 따른 글 삭제 -->
+	<delete id="deleteBoardByBonum" parameterType="com.woongs.vo.BoardVO">
+		DELETE FROM
+			tb_board
+		WHERE
+			bo_num = #{bo_num}
+	</delete>
+
+	<!-- 글번호에 따른 글 편집 -->
+	<update id="updateBoardByBonum" parameterType="com.woongs.vo.BoardVO">
+		UPDATE
+			tb_board
+		SET
+			bo_title	= #{bo_title},
+			bo_contents = #{bo_contents},
+			bo_date		= #{bo_date}			
+		WHERE
+			bo_num = #{bo_num}		
+	</update>
+	
+	<!-- 글번호에 따른 댓글 조회 -->
+	<select id="selectReplyByBonum" parameterType="com.woongs.vo.ReplyVO" resultType="com.woongs.vo.ReplyVO">
+		SELECT
+			re_bo_num,
+			re_num,
+			re_contents,
+			re_writer,
+			re_date
+		FROM
+			tb_reply		
+		WHERE
+			re_bo_num = #{re_bo_num}
+		ORDER BY
+			re_num desc
+	</select>
+	
+	<!-- 글번호에 따른 댓글 입력 -->
+	<insert id="insertReplyByBonum" parameterType="com.woongs.vo.ReplyVO">
+		INSERT INTO
+			tb_reply
+			(
+				re_bo_num,
+	            re_contents,
+	            re_writer,
+	            re_date,
+   	            re_num
+	        )
+		VALUES
+			(
+				#{re_bo_num},
+	            #{re_contents},
+	            #{re_writer},
+	            #{re_date},
+				(
+					SELECT
+						COALESCE(max(re_num)+1, 1)
+					FROM
+						tb_reply
+					WHERE
+						re_bo_num = #{re_bo_num}
+				)
+			)
+	</insert>	
+	
+	<!-- 글번호, 댓글번호에 따른 댓글 삭제 -->
+	<delete id="deleteReply" parameterType="com.woongs.vo.ReplyVO">
+		DELETE FROM
+			tb_reply
+		WHERE
+			re_bo_num = #{re_bo_num} AND
+			re_num = #{re_num} 
+	</delete>
+	
+	<!-- 파일 저장 -->
+	<insert id="insertFiles" parameterType="com.woongs.vo.FileVO">
+		INSERT INTO
+			tb_files
+			(
+				f_num,
+				f_bo_num,
+				f_file_name,	
+				f_file_ori_name,	
+				f_file_url
+	        )
+		VALUES
+			(
+				nextval('tb_files_f_num_seq'),
+				#{f_bo_num},
+				#{f_file_name},	
+				#{f_file_ori_name},	
+				#{f_file_url}
+			)
+	</insert>
+	
+	<!-- 파일 불러오기 -->
+	<select id="selectFiles" parameterType="com.woongs.vo.FileVO" resultType="com.woongs.vo.FileVO">
+		SELECT
+			f_num,
+			f_bo_num,
+			f_file_name,	
+			f_file_ori_name,	
+			f_file_url			
+		FROM
+			tb_files
+		WHERE
+			f_bo_num = #{f_bo_num}			
+	</select>	
+</mapper>

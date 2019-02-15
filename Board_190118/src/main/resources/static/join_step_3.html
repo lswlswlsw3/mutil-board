@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="/css/join_step_3.css">
+
+</head>
+<body>
+	<div id="div-title">
+		<h2>회원가입 양식 - STEP3</h2>
+	</div>
+
+	<!-- 회원가입 정보 입력 부분 -->
+	<form action="/join_step_3" method="post">
+	  <div id="form-group">
+	  	<label for="name">이름</label>
+	    <input type="text" class="form-control" name="name" id="name" placeholder="이름">
+	  </div>
+
+	  <div id="form-group">
+	  	<label for="sabun">사번</label>
+	    <input type="text" class="form-control" name="sabun" id="sabun" placeholder="사번">
+	  </div>
+
+	  <div id="form-group">
+	  	<label for="email">이메일</label>
+	    <input type="email" class="form-control" name="email" id="email" placeholder="이메일">
+	  </div>
+	  
+	  <div id="form-group">
+	  	<label for="password">비밀번호</label>
+	    <input type="password" class="form-control" name="password" id="password" placeholder="비밀번호">
+	  </div>
+
+	  <div id="form-group">
+	  	<label for="auth_info">인증번호</label>
+	    <input type="text" class="form-control" name="auth_info" id="auth_info" placeholder="인증번호">
+	  </div>
+	  
+	  <div id="form-group">
+		  <button type="submit" class="btn btn-primary">회원가입</button>
+		  <button type="button" class="btn btn-primary" id="btn_back" onclick="location.href='/join_step_2'">뒤로</button>
+	  </div>
+	</form>
+	
+	<div id="div-error">
+		<span th:text="${error}"></span>
+	</div>
+</body>
+</html>

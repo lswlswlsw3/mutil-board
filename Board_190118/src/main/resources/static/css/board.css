@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+#board {
+	border-style: solid;
+	margin-left: 20px;
+	margin-bottom: 10px;
+    width: 70%;
+    height: 100%;    
+}
+
+#board_title, #board_paging {
+	margin-left: 20px;
+	margin-bottom: 10px;
+    width: 70%;
+    height: 100%;    
+}
+
+#btn_write {
+	margin-left: 20px;
+	margin-bottom: 10px;    
+}
+
+#form-search {
+	margin-left: 20px;
+	margin-bottom: 10px;    	    
+}
+
+#div-header {
+   	margin-top: 10px;
+  	margin-left: 20px;
+}

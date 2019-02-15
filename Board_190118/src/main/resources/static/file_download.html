@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+
+<body>
+	<div id="title">
+		<h2>파일 업로드 테스트</h2>
+	</div>
+
+	<form action="#" th:action="@{/downloadFile}" th:object="${article}"
+	      method="post" enctype="multipart/form-data">
+	    <p>title: <input type="text" th:field="*{title}" /></p>
+	    <p>content:
+	        <textarea th:field="*{content}"></textarea>
+	    </p>
+	    <p>file:
+	        <input type="file" th:field="*{file}"/>
+	    </p>
+	
+	    <input type="submit" value="submit" />
+	</form>
+
+
+	
+</body>
+</html>

@@ -1,0 +1,31 @@
+<ehcache>
+    <diskStore path="java.io.tmpdir"/>
+	
+    <defaultCache
+            maxEntriesLocalHeap="10000"
+            maxEntriesLocalDisk="10000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU"/>
+    
+    <cache name="promotionCache"
+            maxElementsInMemory="10"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            memoryStoreEvictionPolicy="LRU" />
+
+	<!-- 
+		diskStore path="java.io.tmpdir"	// 임시저장경로를 지정하는 설정
+		maxEntriesLocalHeap				// 메모리에 생성될 최대 객체 갯수
+		maxEntriesLocalDisk				// 디스크에 생성될 최대 객체 갯수
+		eternal							// 저장될 캐시를 삭제할 것인가에 대한 설정
+		timeToIdleSeconds				// 해당 초 동안 캐시가 사용되지 않으면 캐시를 삭제
+		timeToLiveSeconds				// 해당 초가 지나면 캐시를 삭제
+		diskExpiryThreadIntervalSeconds // diskExpiry 스레드의 작업 수행 간격을 설정
+		memoryStoreEvictionPolicy		// 객체 갯수가 maxEntriesLocalHeap에 도달하면 객체를 제거하고 새로 추가하는 정책을 정의 // LRU, FIFO, LFO 등 
+	 -->
+
+</ehcache>

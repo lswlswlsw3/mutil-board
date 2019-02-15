@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="/css/join_step_1.css">
+<script type="text/javascript" src="/script/join_step_1.js"></script>
+
+</head>
+<body>
+	<div id="div-title">
+		<h2>약관동의 - STEP1</h2>
+	</div>
+
+	<form action="/join_step_1" method="post">
+		<div id="div-checkbox">
+			<div class="custom-control custom-checkbox">
+				<input type="checkbox" class="custom-control-input" id="all_check">
+				<label class="custom-control-label" for="all_check">이용약관, 개인정보 수집 및 이용에 모두 동의 합니다.</label>
+			</div>
+	
+			<div class="custom-control custom-checkbox">
+				<input type="checkbox" class="custom-control-input" name="use_rule_check" id="use_rule_check">
+				<label class="custom-control-label" for="use_rule_check">이용약관 (필수)</label>
+			</div>
+			
+			<div class="custom-control custom-checkbox">
+				<input type="checkbox" class="custom-control-input" name="private_info_check" id="private_info_check">
+				<label class="custom-control-label" for="private_info_check">개인정보 수집 및 이용동의 (필수)</label>
+			</div>
+	
+			<div class="custom-control custom-checkbox">
+				<input type="checkbox" class="custom-control-input" name="advertise_check" id="advertise_check">
+				<label class="custom-control-label" for="advertise_check">고객 편의제공을 위한 이용 및 처리위탁, 정보/광고 수신 동의 (선택)</label>
+			</div>
+		</div>
+	
+		<div class="form-group">
+			<button type="submit" class="btn btn-primary" id="btn-send">다음</button>
+			<button type="button" class="btn btn-primary" id="btn-back" onclick="location.href='/'">뒤로</button>
+		</div>		
+	</form>
+	
+	<div id="div-error">
+		<span th:text="${error}"></span>
+	</div>
+
+</body>
+</html>
